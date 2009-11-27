@@ -20,7 +20,7 @@
 
              <ul class="list-group tasks">
                 <li is="app-task" v-for="(task, index) in tasks"
-                    :tasks="tasks" :task="task" :index="index"></li>
+                    :tasks="tasks" :task="task" :index="index" @remove="deleteTask"></li>
             </ul>
 			
 			<p><a @click="deleteCompleted">Eliminar tareas completadas</a></p>
@@ -38,13 +38,13 @@
         <script src="js/vue.js"></script>
 
         <script type="text/x-template" id="task-template">
-                <li class="list-group-item"
-                    :class="{editing: task.editing, completed: !task.pending}">
+                 <li class="list-group-item"
+                    :class="{editing: editing, completed: !task.pending}">
                     <a @click="toggleStatus">
                         <app-icon :img="task.pending ? 'unchecked' : 'check'" aria-hidden="true"></span>
                     </a>
 
-                    <template v-if="!task.editing">
+                    <template v-if="!editing">
                         <span class="description">{{ task.description }}</span>
 
                         <div>

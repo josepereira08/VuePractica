@@ -1,4 +1,3 @@
-
 Vue.component('app-icon', {
     template: '<span :class="cssClasses" aria-hidden="true"></span>',
     props: ['img'],
@@ -10,31 +9,39 @@ Vue.component('app-icon', {
 });
 
 Vue.component('app-task', {
+    data: function () {
+        return {
+            editing: false,
+            draft: ''
+        };
+    },
     template: '#task-template',
-    props: ['tasks', 'task', 'index'],
+    props: ['task', 'index'],
     methods: {
         toggleStatus: function () {
             this.task.pending = !this.task.pending;
         },
        edit: function () {
+            /* PENDIENTE
             this.tasks.forEach(function (task) {
                 task.editing = false;
             });
+            */
 
             this.draft = this.task.description;
 
-            this.task.editing = true;
+            this.editing = true;
         },
         update: function () {
             this.task.description = this.draft;
 
-            this.task.editing = false;
+            this.editing = false;
         },
         discard: function () {
-            this.task.editing = false;
+            this.editing = false;
         },
         remove: function () {
-            this.tasks.splice(this.index, 1);
+            this.$emit('remove', this.index);
         },
     }
 });
@@ -51,31 +58,37 @@ var vm = new Vue({
 
             this.new_task = '';
         },
+        deleteTask: function (index) {
+            this.tasks.splice(index, 1);
+        },
         deleteCompleted: function () {
             this.tasks = this.tasks.filter(function (task) {
                 return task.pending;
             });
         }
     },
+    /*
+    created: function () {
+        this.tasks.forEach(function (task) {
+            this.$set(task, 'editing', false);
+        }.bind(this));
+    },
+    */
     data: {
-        draft: '',
         new_task: '',
-        tasks:[
-	        {
-	        	description:'Aprender vue',
-	        	pending: true,
-	        	editing:false
-	        },
-	        {
-	        	description:'Aprender saas',
-	        	pending: true, 
-	        	editing:false
-	        },
-	        {
-	        	description:'Aprender php',
-	        	pending: false,
-	        	editing:false
-	        }
-	    ]
+        tasks: [
+            {
+                description: 'Aprender Vue.js',
+                pending: true,
+            },
+            {
+                description: 'Suscribirse a Styde.net',
+                pending: true,
+            },
+            {
+                description: 'Grabar lección de Vue',
+                pending: false,
+            }
+        ]
     }
 });
