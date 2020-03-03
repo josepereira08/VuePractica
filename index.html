@@ -1,0 +1,45 @@
+<html>
+
+<head>
+	<title>vue-practica</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+
+</head>
+
+<body>
+
+
+
+<div id="app" class="container">
+	<div>
+		
+		<h5> BIENVENIDO {{ nombre.toUpperCase() }}</h5>
+		<h5> {{ ing ? 'Ingeniero.' : 'Tsu' }}  en Informatica </h5>
+		<h5> Edad: {{ 20+5 }}</h5>
+		<h5> Revertido: {{ revertirNombre }}</h5>
+		<h5 v-html="ciudad"></h3>
+		<h5 v-text="estado"></h3>
+	</div>
+</div>
+<footer><br><br><center> <b>- - - - &copy;José Pereira Vue_2020 - - - -</b></center></footer>
+
+<script src="js/vue/vue.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+	var vm = new Vue({
+		el:"#app",
+		data:{ nombre:'', ing:false ,ciudad:'<b>Carúpano</b>',estado:'Sucre'},
+		computed:{
+			revertirNombre: function() {
+				return this.nombre.split('').reverse().join('');
+			}
+		}
+	});
+	vm.nombre = 'Jose Pereira';
+
+</script>
+
+</body>
+
+</html>
