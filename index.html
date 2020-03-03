@@ -11,15 +11,40 @@
 
 
 <div id="app" class="container">
-	<div>
-		
-		<h5> BIENVENIDO {{ nombre.toUpperCase() }}</h5>
-		<h5> {{ ing ? 'Ingeniero.' : 'Tsu' }}  en Informatica </h5>
-		<h5> Edad: {{ 20+5 }}</h5>
-		<h5> Revertido: {{ revertirNombre }}</h5>
-		<h5 v-html="ciudad"></h3>
-		<h5 v-text="estado"></h3>
+	{{ $data }}<br><br>
+	<h5>¿Has trabajado con VUE.js ?</h5>
+
+	<div class="radio">
+		<label class="radio-inline">
+		<input type="radio" v-model="vue.exp"  :value="true">
+		SI
+		</label>
+		<label class="radio-inline">
+		<input type="radio" v-model="vue.exp" :value="false">
+		NO
+		</label>
 	</div>
+
+	<template v-if="vue.exp">
+
+		<div  class="form-group">
+			<label for="vue_years"><b>Cuantos años tienes de experiancia en vue ?</b></label>
+			<input type="number" v-model="vue.years" class="form-control">
+		</div>
+
+		<div v-if="vue.years < 2" class="form-group">
+			<label ><b>Que te motivo aprender vue ?</b></label>
+			<textarea class="form-control" v-model="vue.description" rows="4" placeholder="Descripcion"></textarea>
+		</div>
+
+		<div v-else class="form-group">
+			<label for="vue_years"><b>Cuentanos tu experiencia con vue ?</b></label>
+			<textarea class="form-control" v-model="vue.description" rows="4" placeholder="Descripcion" ></textarea>
+		</div>
+		<p v-if="descripcionError != ''" style="color:red;" >{{ descripcionError }}</p>
+
+	</template>
+
 </div>
 <footer><br><br><center> <b>- - - - &copy;José Pereira Vue_2020 - - - -</b></center></footer>
 
@@ -29,12 +54,29 @@
 
 	var vm = new Vue({
 		el:"#app",
-		data:{ nombre:'', ing:false ,ciudad:'<b>Carúpano</b>',estado:'Sucre'},
+		data:{
+			vue:{
+				exp:null,
+				years:0,
+				description:''
+			}
+		},
 		computed:{
-			revertirNombre: function() {
-				return this.nombre.split('').reverse().join('');
+			descripcionError:
+				function (){
+					var val = this.vue.description.trim();
+					if (val=='') {
+						return 'Campo obligatorio!!!'
+					}
+					if (val.length>20) {
+						return 'Descripcion debe tener menos de 20 caracteres!'
+					}
+					if (val.length<5) {
+						return 'Descripcion debe tener mas de 5 caracteres!'
+					}
 			}
 		}
+		
 	});
 	vm.nombre = 'Jose Pereira';
 
