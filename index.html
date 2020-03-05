@@ -11,42 +11,21 @@
 
 
 <div id="app" class="container">
-	{{ $data }}<br><br>
-	<h5>¿Has trabajado con VUE.js ?</h5>
-
-	<div class="radio">
-		<label class="radio-inline">
-		<input type="radio" v-model="vue.exp"  :value="true">
-		SI
-		</label>
-		<label class="radio-inline">
-		<input type="radio" v-model="vue.exp" :value="false">
-		NO
-		</label>
-	</div>
-
-	<template v-if="vue.exp">
-
-		<div  class="form-group">
-			<label for="vue_years"><b>Cuantos años tienes de experiancia en vue ?</b></label>
-			<input type="number" v-model="vue.years" class="form-control">
-		</div>
-
-		<div v-if="vue.years < 2" class="form-group">
-			<label ><b>Que te motivo aprender vue ?</b></label>
-			<textarea class="form-control" v-model="vue.description" rows="4" placeholder="Descripcion"></textarea>
-		</div>
-
-		<div v-else class="form-group">
-			<label for="vue_years"><b>Cuentanos tu experiencia con vue ?</b></label>
-			<textarea class="form-control" v-model="vue.description" rows="4" placeholder="Descripcion" ></textarea>
-		</div>
-		<p v-if="descripcionError != ''" style="color:red;" >{{ descripcionError }}</p>
-
-	</template>
-
+	<h4>Marcas de autos</h4>
+	<ul>
+		
+		<li v-for="carro of carros" v-if="!carro.vendido">
+			{{ carro.marca }} {{ carro.modelo }}<hr>
+		
+		</li>
+		
+	</ul>
 </div>
-<footer><br><br><center> <b>- - - - &copy;José Pereira Vue_2020 - - - -</b></center></footer>
+
+
+
+
+<footer style="background-color:#a9dfff;margin-top: 60px;"><center> <b>- - - - &copy;José Pereira Vue_2020 - - - -</b></center></footer>
 
 <script src="js/vue/vue.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -55,30 +34,31 @@
 	var vm = new Vue({
 		el:"#app",
 		data:{
-			vue:{
-				exp:null,
-				years:0,
-				description:''
-			}
-		},
-		computed:{
-			descripcionError:
-				function (){
-					var val = this.vue.description.trim();
-					if (val=='') {
-						return 'Campo obligatorio!!!'
-					}
-					if (val.length>20) {
-						return 'Descripcion debe tener menos de 20 caracteres!'
-					}
-					if (val.length<5) {
-						return 'Descripcion debe tener mas de 5 caracteres!'
-					}
-			}
+			carros:[
+				{
+					marca:'Lamborghini',
+					modelo:'Gallardo',
+					vendido: false
+				},
+				{
+					marca:'Ferrari',
+					modelo:'Enzo',
+					vendido: false
+				},
+				{
+					marca:'Mclaren',
+					modelo:'P1',
+					vendido:true
+				},
+				{
+					marca:'Bugatti',
+					modelo:'Veyron',
+					vendido: false
+				}					]
 		}
+	
 		
 	});
-	vm.nombre = 'Jose Pereira';
 
 </script>
 
