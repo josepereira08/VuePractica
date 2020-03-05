@@ -13,13 +13,23 @@
 <div id="app" class="container">
 	<h4>Marcas de autos</h4>
 	<ul>
-		
-		<li v-for="carro of carros" v-if="!carro.vendido">
+		<template v-for="carro of carros" >
+		<li v-if="!carro.vendido">
 			{{ carro.marca }} {{ carro.modelo }}<hr>
 		
 		</li>
+		<li  v-else style="color: red;" @click="venderCarro">
+			{{ carro.marca }} {{ carro.modelo }}<hr>
 		
+		</li>
+		</template>
 	</ul>
+	<input type="text" v-model="newCarroMarca" class="form-control" style="margin-bottom: 30px;" placeholder="Marca">
+
+	<input type="text" v-model="newCarroModelo" @keyup.enter="agregarCarro" class="form-control" style="margin-bottom: 30px;" placeholder="Modelo">
+	<p> Vendido.. <input type="checkbox" v-model="newVendido"></p><br><br>
+
+	<button class="btn btn-primary" @click="agregarCarro" >Enviar</button>
 </div>
 
 
@@ -34,6 +44,9 @@
 	var vm = new Vue({
 		el:"#app",
 		data:{
+			newCarroMarca:'',
+			newCarroModelo:'',
+			newVendido:'',
 			carros:[
 				{
 					marca:'Lamborghini',
@@ -54,7 +67,30 @@
 					marca:'Bugatti',
 					modelo:'Veyron',
 					vendido: false
-				}					]
+				}					
+			]
+		},
+		computed:{
+
+		},
+		methods:{
+			agregarCarro: function() {
+				this.carros.push({
+					marca: this.newCarroMarca,
+					modelo: this.newCarroModelo,
+					vendido:this.newVendido
+				});
+
+				this.newCarroMarca = '';
+
+				this.newCarroModelo = '';
+
+				this.newVendido = false;
+			},
+			venderCarro: function() {
+				if (this.newVendido)this.newVendido = false;
+
+			}
 		}
 	
 		
