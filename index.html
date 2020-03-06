@@ -11,10 +11,12 @@
 
 
 <div id="app" class="container">
+
 	<div class="clase">
 		<h5> BIENVENIDO {{ nombre | mayuscula | titulo('Ing ') }}</h5>
 	</div>
 <footer><br><br><center> <b>- - - - &copy;José Pereira Vue_2020 - - - -</b></center></footer>
+
 
 <script src="js/vue/vue.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -25,6 +27,7 @@
 	});
 
 	var vm = new Vue({
+
 		el:".clase",
 		data:{ 
 			nombre:'Jose Pereira'
@@ -36,6 +39,7 @@
 		}
 		
 	});
+
 
 
 </script>
