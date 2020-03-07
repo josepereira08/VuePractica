@@ -1,49 +1,84 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-	<title>vue-practica</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css" >
+        <meta name="description" content="Curso de Vue 2">
+        <link rel="icon" href="JPicon.png">
 
-</head>
+        <title>Curso de Vue 2</title>
 
-<body>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              rel="stylesheet">
 
+        <link href="CSS/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="app" class="container">
+            <h2>Tareas</h2>
 
+            <ul class="list-group tasks">
+                <li class="list-group-item" v-for="(task, index) in tasks" :class="{editing: task.editing, completed: !task.pending}">
+                    <a @click="toggleStatus(task)"><span class="glyphicon"
+                                      :class="task.pending ? 'glyphicon-unchecked' : 'glyphicon-check'"
+                                      aria-hidden="true"></span></a>
+					<template v-if="!task.editing">
+	                    <span  class="description">{{ task.description }}</span>
+	                    <div>
+	                        <a @click="editTask(task)">
+	                            <span class="glyphicon glyphicon-edit"
+	                                  aria-hidden="true"></span>
+	                        </a>
+	                        <a @click="deleteTask(index)">
+	                            <span class="glyphicon glyphicon-trash"
+	                                  aria-hidden="true"></span>
+	                        </a>
+	                    </div>
+					</template>
+					<template v-else>
 
-<div id="app" class="container">
+						<input type="text" v-model="draft">
 
-	<div class="clase">
-		<h5> BIENVENIDO {{ nombre | mayuscula | titulo('Ing ') }}</h5>
-	</div>
-<footer><br><br><center> <b>- - - - &copy;José Pereira Vue_2020 - - - -</b></center></footer>
+                        <div>
+                            <a @click="updateTask(task)">
+                                <span class="glyphicon glyphicon-ok"
+                                      aria-hidden="true"></span>
+                            </a>
+                            <a @click="discardTask(task)">
+                                <span class="glyphicon glyphicon-remove"
+                                      aria-hidden="true"></span>
+                            </a>
+                        </div> 
+					</template>
+                    
+                  
+                </li>
+            </ul>
+			
+			<p><a @click="deleteCompleted">Eliminar tareas completadas</a></p>
 
+            <form @submit.prevent="createTask" class="new-task-form">
+                <input v-model="new_task" type="text" class="form-control">
+                <button class="btn btn-primary">Crear tarea</button>
+            </form>
 
-<script src="js/vue/vue.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script type="text/javascript">
+            <footer class="footer">
+                <p>&copy; 2020 José Pereira.</p>
+            </footer>
+        </div>
 
-	Vue.filter('titulo',function(value,titulo){
-		return titulo  + ' ' + value;
-	});
-
-	var vm = new Vue({
-
-		el:".clase",
-		data:{ 
-			nombre:'Jose Pereira'
-		},
-		filters: {
-			mayuscula: function(value){
-				return value.toUpperCase();
-			}
-		}
+        <script src="js/vue.js"></script>
 		
-	});
-
-
-
-</script>
-
-</body>
-
+		<script src="js/app.js"></script> 
+  </body>
 </html>
+
+
+
+
+
+
+
+
+
