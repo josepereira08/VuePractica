@@ -38,7 +38,7 @@
         <script src="js/vue.js"></script>
 
         <script type="text/x-template" id="task-template">
-                 <li class="list-group-item"
+                   <li class="list-group-item"
                     :class="{editing: editing, completed: !task.pending}">
                     <a @click="toggleStatus">
                         <app-icon :img="task.pending ? 'unchecked' : 'check'" aria-hidden="true"></span>
